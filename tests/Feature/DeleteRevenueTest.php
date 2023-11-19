@@ -16,7 +16,7 @@ class DeleteRevenueTest extends TestCase
     {
         $revenue = Revenue::factory()->create();
 
-        $this->delete('/api/revenues/' . $revenue->id)
+        $this->delete(route('revenues.destroy', $revenue->id))
             ->assertStatus(Response::HTTP_OK);
 
         $this->assertDatabaseMissing(Revenue::class, [$revenue->id]);
@@ -29,7 +29,7 @@ class DeleteRevenueTest extends TestCase
         $this->expectException(\ErrorException::class);
         $this->expectExceptionMessage('Attempt to read property "id" on null');
 
-        $this->delete('/api/revenues/' . $revenue->id)
+        $this->delete(route('revenues.destroy', $revenue->id))
             ->assertStatus(Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

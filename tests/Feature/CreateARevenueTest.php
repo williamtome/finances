@@ -18,13 +18,13 @@ class CreateARevenueTest extends TestCase
             'amount' => 1000,
         ];
 
-        $this->post('api/revenues', $data, ['Accept' => 'application/json'])
+        $this->post(route('revenues.store'), $data, ['Accept' => 'application/json'])
             ->assertStatus(Response::HTTP_OK);
     }
 
     public function test_should_be_generate_error_on_create_a_revenue_no_data()
     {
-        $this->post('api/revenues', [], ['Accept' => 'application/json'])
+        $this->post(route('revenues.store'), [], ['Accept' => 'application/json'])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertJsonValidationErrors([
                 'description' => 'The description field is required.',
@@ -36,7 +36,7 @@ class CreateARevenueTest extends TestCase
     {
         $data = ['description' => 1234, 'amount' => 200];
 
-        $this->post('api/revenues', $data, ['Accept' => 'application/json'])
+        $this->post(route('revenues.store'), $data, ['Accept' => 'application/json'])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertJsonValidationErrors([
                 'description' => 'The description field must be a string.',
@@ -51,7 +51,7 @@ class CreateARevenueTest extends TestCase
             'amount' => 0,
         ];
 
-        $this->post('api/revenues', $data, ['Accept' => 'application/json'])
+        $this->post(route('revenues.store'), $data, ['Accept' => 'application/json'])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertJsonValidationErrors([
                 'amount' => 'The amount field must be greater than or equal to 1.',

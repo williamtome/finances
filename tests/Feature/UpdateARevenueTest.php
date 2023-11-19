@@ -21,7 +21,7 @@ class UpdateARevenueTest extends TestCase
             'amount' => 2000,
         ];
 
-        $this->put("api/revenues/{$revenue->id}", $data, ['Accept' => 'application/json'])
+        $this->put(route('revenues.update', $revenue->id), $data, ['Accept' => 'application/json'])
             ->assertStatus(Response::HTTP_OK)
             ->assertJsonFragment($data);
     }
@@ -30,7 +30,7 @@ class UpdateARevenueTest extends TestCase
     {
         $revenue = Revenue::factory()->create();
 
-        $this->put("api/revenues/{$revenue->id}", [], ['Accept' => 'application/json'])
+        $this->put(route('revenues.update', $revenue->id), [], ['Accept' => 'application/json'])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertJsonValidationErrors([
                 'description' => 'The description field is required.',
@@ -47,7 +47,7 @@ class UpdateARevenueTest extends TestCase
             'amount' => 'adsa',
         ];
 
-        $this->put("api/revenues/{$revenue->id}", $data, ['Accept' => 'application/json'])
+        $this->put(route('revenues.update', $revenue->id), $data, ['Accept' => 'application/json'])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertJsonValidationErrors([
                 'description' => 'The description field must be a string.',
