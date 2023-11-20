@@ -35,7 +35,7 @@ class CreateExpenseTest extends TestCase
             ]);
     }
 
-    public function test_should_br_generate_error_when_the_description_is_incorrect(): void
+    public function test_should_be_generate_error_when_the_description_is_incorrect(): void
     {
         $data = [
             'description' => 1234,
