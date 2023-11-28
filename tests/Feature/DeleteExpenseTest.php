@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Expense;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class DeleteExpenseTest extends TestCase
