@@ -16,7 +16,7 @@ class DeleteExpenseTest extends TestCase
     {
         $expense = Expense::factory()->create();
 
-        $this->delete(route('expense.destroy', $expense->id))
+        $this->delete(route('expenses.destroy', $expense->id))
             ->assertStatus(Response::HTTP_OK);
 
         $this->assertDatabaseMissing(Expense::class, [$expense->id]);
