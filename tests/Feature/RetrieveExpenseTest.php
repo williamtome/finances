@@ -12,7 +12,7 @@ class RetrieveExpenseTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_list_all_expenses_successful()
+    public function test_list_all_expenses_successful(): void
     {
         Expense::factory()->count(5)->create();
 
