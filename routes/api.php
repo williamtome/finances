@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\RevenueController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('revenues', RevenueController::class);
+Route::resource('revenues', RevenueController::class)->only(['index', 'store', 'update', 'destroy']);
+Route::resource('expenses', ExpenseController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
