@@ -15,6 +15,11 @@ class RevenueController extends Controller
         return response()->json(Revenue::all());
     }
 
+    public function show(Revenue $revenue)
+    {
+        return response()->json($revenue);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
