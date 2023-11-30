@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ExpenseRequest;
 use App\Models\Expense;
-use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
 {
@@ -23,14 +23,9 @@ class ExpenseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ExpenseRequest $request)
     {
-        $this->validate($request, [
-            'description' => 'required|string|min:5',
-            'amount' => 'required|numeric|gte:1',
-        ]);
-
-        $expense = Expense::create($request->all());
+        $expense = Expense::create($request->validated());
 
         return response()->json($expense);
     }
@@ -38,14 +33,9 @@ class ExpenseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Expense $expense)
+    public function update(ExpenseRequest $request, Expense $expense)
     {
-        $this->validate($request, [
-            'description' => 'required|string|min:5',
-            'amount' => 'required|numeric|gte:1',
-        ]);
-
-        $expense->update($request->all());
+        $expense->update($request->validated());
 
         return response()->json($expense);
     }
