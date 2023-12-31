@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Category;
 use App\Models\Expense;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -62,6 +63,54 @@ class CreateExpenseTest extends TestCase
             ->assertJsonValidationErrors([
                 'amount' => 'The amount field must be a number.',
                 'amount' => 'The amount field must be greater than or equal to 1.',
+            ]);
+    }
+
+    public function test_should_set_others_category_when_creating_a_new_expense()
+    {
+        $data = [
+            'description' => 'Despesa teste',
+            'amount' => 100,
+        ];
+
+        $this->post(route('expenses.store'), $data, ['Accept' => 'application/json'])
+            ->assertStatus(Response::HTTP_CREATED)
+            ->assertJsonFragment([
+                'description' => 'Despesa teste',
+                'amount' => 100,
+                'category_id' => Category::OTHERS,
+            ]);
+    }
+
+    public function test_should_set_category_id_chosen_when_creating_a_new_expense()
+    {
+        $data = [
+            'description' => 'Despesa teste',
+            'amount' => 100,
+            'category_id' => 1,
+        ];
+
+        $this->post(route('expenses.store'), $data, ['Accept' => 'application/json'])
+            ->assertStatus(Response::HTTP_CREATED)
+            ->assertJsonFragment([
+                'description' => 'Despesa teste',
+                'amount' => 100,
+                'category_id' => Category::FOOD,
+            ]);
+    }
+
+    public function test_should_be_generate_validation_error_when_creating_new_expense_with_unknown_category()
+    {
+        $data = [
+            'description' => 'Despesa teste',
+            'amount' => 100,
+            'category_id' => 99,
+        ];
+
+        $this->post(route('expenses.store'), $data, ['Accept' => 'application/json'])
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->assertJsonValidationErrors([
+                'category_id' => 'The selected category id is invalid.',
             ]);
     }
 }
