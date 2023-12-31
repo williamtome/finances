@@ -19,7 +19,7 @@ class ExpenseController extends Controller
 
     public function store(ExpenseRequest $request)
     {
-        $expense = Expense::create($request->validated());
+        $expense = Expense::create($request->all());
 
         return response()->json($expense);
     }
