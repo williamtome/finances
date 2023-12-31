@@ -14,6 +14,7 @@ class Expense extends Model
     protected $fillable = [
         'description',
         'amount',
+        'category_id',
     ];
 
     protected function amount(): Attribute
