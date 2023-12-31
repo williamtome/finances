@@ -20,7 +20,7 @@ class CreateExpenseTest extends TestCase
         ];
 
         $this->post(route('expenses.store'), $data, ['Accept' => 'application/json'])
-            ->assertStatus(Response::HTTP_OK);
+            ->assertStatus(Response::HTTP_CREATED);
 
         $this->assertDatabaseHas(Expense::class, $data);
     }
