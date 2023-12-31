@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('revenues', RevenueController::class)->only(['index', 'store', 'update', 'destroy']);
+Route::resource('revenues', RevenueController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
 Route::resource('expenses', ExpenseController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
