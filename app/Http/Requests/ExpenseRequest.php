@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ExpenseRequest extends FormRequest
@@ -18,5 +19,14 @@ class ExpenseRequest extends FormRequest
             'description' => 'required|string|min:5',
             'amount' => 'required|numeric|gte:1',
         ];
+    }
+
+    protected function passedValidation(): void
+    {
+        if (is_null($this->category_id)) {
+            $this->merge([
+                'category_id' => Category::OTHERS,
+            ]);
+        }
     }
 }
