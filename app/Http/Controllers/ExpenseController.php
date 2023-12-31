@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ExpenseRequest;
 use App\Models\Expense;
+use Illuminate\Http\Response;
 
 class ExpenseController extends Controller
 {
@@ -21,7 +22,7 @@ class ExpenseController extends Controller
     {
         $expense = Expense::create($request->all());
 
-        return response()->json($expense);
+        return response()->json($expense, Response::HTTP_CREATED);
     }
 
     public function update(ExpenseRequest $request, Expense $expense)
