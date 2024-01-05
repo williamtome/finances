@@ -4,13 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ExpenseRequest;
 use App\Models\Expense;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class ExpenseController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Expense::all());
+        $expenses = Expense::query()
+            ->when(!empty($request->description), function ($query) use ($request) {
+                $query->where('description', 'like', "%{$request->description}%");
+            })
+            ->get();
+
+        return response()->json($expenses);
     }
 
     public function show(Expense $expense)
